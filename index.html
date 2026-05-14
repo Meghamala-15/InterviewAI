@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>InterviewAI</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+
+    *{
+      font-family:'Poppins',sans-serif;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#0f172a;
+      overflow-x:hidden;
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(12px);
+      border:1px solid rgba(255,255,255,0.12);
+    }
+
+    .gradient-text{
+      background:linear-gradient(to right,#38bdf8,#8b5cf6);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .animate-float{
+      animation:float 5s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%{
+        transform:translateY(0px);
+      }
+      50%{
+        transform:translateY(-10px);
+      }
+      100%{
+        transform:translateY(0px);
+      }
+    }
+
+    .pulse-ring{
+      animation:pulse 2s infinite;
+    }
+
+    @keyframes pulse{
+      0%{
+        transform:scale(0.95);
+        box-shadow:0 0 0 0 rgba(59,130,246,0.7);
+      }
+
+      70%{
+        transform:scale(1);
+        box-shadow:0 0 0 15px rgba(59,130,246,0);
+      }
+
+      100%{
+        transform:scale(0.95);
+      }
+    }
+
+    .hidden-box{
+      display:none;
+    }
+
+  </style>
+</head>
+
+<body class="text-white min-h-screen">
+
+  <!-- NAVBAR -->
+
+  <nav class="flex justify-between items-center px-6 py-5 md:px-14">
+
+    <div class="text-2xl font-bold gradient-text">
+      InterviewAI
+    </div>
+
+    <div class="hidden md:flex gap-8 text-gray-300">
+
+      <a href="#features" class="hover:text-cyan-400 transition">
+        Features
+      </a>
+
+      <a href="#dashboard" class="hover:text-cyan-400 transition">
+        Dashboard
+      </a>
+
+      <a href="#practice" class="hover:text-cyan-400 transition">
+        Practice
+      </a>
+
+    </div>
+
+    <button
+      onclick="scrollToSection('practice')"
+      class="bg-cyan-500 hover:bg-cyan-400 transition px-5 py-2 rounded-full font-medium"
+    >
+      Get Started
+    </button>
+
+  </nav>
+
+  <!-- HERO -->
+
+  <section class="px-6 md:px-16 py-16 md:py-24 grid md:grid-cols-2 gap-12 items-center">
+
+    <div>
+
+      <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+        Crack Interviews with
+        <span class="gradient-text">AI Power</span>
+      </h1>
+
+      <p class="mt-6 text-gray-300 text-lg leading-relaxed">
+        Practice real interview questions, improve communication skills,
+        analyze confidence levels, and prepare smarter with AI-driven insights.
+      </p>
+
+      <div class="flex flex-wrap gap-4 mt-8">
+
+        <button
+          onclick="startMockInterview()"
+          class="bg-cyan-500 hover:bg-cyan-400 px-6 py-3 rounded-xl font-semibold transition shadow-lg shadow-cyan-500/20"
+        >
+          Start Mock Interview
+        </button>
+
+        <button
+          onclick="scrollToSection('features')"
+          class="glass px-6 py-3 rounded-xl hover:bg-white/10 transition"
+        >
+          Explore Features
+        </button>
+
+      </div>
+
+      <div class="flex gap-8 mt-10 flex-wrap">
+
+        <div>
+          <h2 class="text-3xl font-bold">AI Powered</h2>
+          <p class="text-gray-400">Interview System</p>
+        </div>
+
+        <div>
+          <h2 class="text-3xl font-bold">24/7</h2>
+          <p class="text-gray-400">Practice Access</p>
+        </div>
+
+        <div>
+          <h2 class="text-3xl font-bold">Realtime</h2>
+          <p class="text-gray-400">Insights</p>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="relative flex justify-center">
+
+      <div class="absolute w-72 h-72 bg-cyan-500 rounded-full blur-3xl opacity-20"></div>
+
+      <div class="glass p-8 rounded-3xl w-full max-w-md animate-float relative z-10">
+
+        <div class="flex items-center justify-between">
+
+          <div>
+            <h3 class="text-xl font-semibold">Live Interview</h3>
+            <p class="text-gray-400 text-sm">AI analyzing response...</p>
+          </div>
+
+          <div class="w-4 h-4 bg-green-400 rounded-full pulse-ring"></div>
+
+        </div>
+
+        <div class="mt-8 bg-slate-900 rounded-2xl p-5">
+
+          <p class="text-gray-400 text-sm">Question</p>
+
+          <h2 class="text-lg mt-2 font-medium">
+            Tell me about yourself and your technical strengths.
+          </h2>
+
+        </div>
+
+        <div class="mt-6">
+
+          <div class="flex justify-between mb-2 text-sm">
+
+            <span>Confidence Score</span>
+
+            <span id="confidenceValue">
+              82%
+            </span>
+
+          </div>
+
+          <div class="w-full bg-slate-700 rounded-full h-4 overflow-hidden">
+
+            <div
+              id="confidenceBar"
+              class="bg-gradient-to-r from-cyan-400 to-purple-500 h-4 rounded-full"
+              style="width:82%"
+            ></div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FEATURES -->
+
+  <section id="features" class="px-6 md:px-16 py-20">
+
+    <div class="mb-14">
+
+      <h2 class="text-5xl font-bold mb-4">
+        Features
+      </h2>
+
+      <p class="text-gray-400 text-lg">
+        Practice, analyze and improve your interview skills with AI-powered feedback.
+      </p>
+
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-8">
+
+      <!-- PERFORMANCE -->
+
+      <div class="glass rounded-3xl p-10 border border-white/10">
+
+        <div class="flex items-center gap-5 mb-6">
+
+          <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center text-3xl">
+            📊
+          </div>
+
+          <div>
+
+            <h3 class="text-3xl font-semibold">
+              Performance Analytics
+            </h3>
+
+            <p class="text-gray-400 mt-1">
+              Analyze your interview answers
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="flex flex-col items-center justify-center text-center py-12">
+
+          <div class="w-40 h-40 rounded-full border-2 border-dashed border-gray-600 flex items-center justify-center text-6xl text-gray-500">
+            📋
+          </div>
+
+          <h4 class="text-3xl font-bold mt-8 mb-4">
+            AI Performance Insights
+          </h4>
+
+          <p class="text-gray-400 max-w-md leading-relaxed">
+            Get instant feedback on communication,
+            confidence, clarity and technical explanation.
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- SPEECH ANALYSIS -->
+
+      <div class="glass rounded-3xl p-10 border border-white/10">
+
+        <div class="flex items-center gap-5 mb-6">
+
+          <div class="w-16 h-16 rounded-2xl bg-purple-500/20 flex items-center justify-center text-3xl">
+            🎤
+          </div>
+
+          <div>
+
+            <h3 class="text-3xl font-semibold">
+              Speech Analysis
+            </h3>
+
+            <p class="text-gray-400 mt-1">
+              Record your answer and get AI feedback
+            </p>
+
+          </div>
+
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+
+          <button
+            onclick="startSpeechAnalysis()"
+            id="recordBtn"
+            class="bg-green-500 hover:bg-green-400 transition py-4 rounded-2xl font-semibold text-lg"
+          >
+            🎙 Start Recording
+          </button>
+
+          <button
+            onclick="stopSpeechAnalysis()"
+            class="bg-red-500 hover:bg-red-400 transition py-4 rounded-2xl font-semibold text-lg"
+          >
+            ⏹ Stop Recording
+          </button>
+
+        </div>
+
+        <div class="mt-6">
+
+          <h4 class="font-semibold mb-3 text-lg">
+            Live Transcript
+          </h4>
+
+          <div
+            class="bg-slate-900/70 rounded-2xl border border-white/5 p-5 min-h-[120px]"
+          >
+
+            <p
+              id="transcriptText"
+              class="text-gray-400 italic"
+            >
+              Your speech will appear here...
+            </p>
+
+          </div>
+
+        </div>
+
+        <div
+          id="speechReport"
+          class="hidden-box mt-6 bg-gradient-to-r from-purple-500/20 to-indigo-500/10 border border-purple-500/20 rounded-2xl p-6"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- DASHBOARD -->
+
+  <section id="dashboard" class="px-6 md:px-16 py-20">
+
+    <div class="glass rounded-3xl p-8 md:p-12">
+
+      <div class="flex flex-col md:flex-row justify-between gap-6 items-start md:items-center">
+
+        <div>
+
+          <h2 class="text-4xl font-bold">
+            Student Dashboard
+          </h2>
+
+          <p class="text-gray-400 mt-3">
+            Track interview preparation progress.
+          </p>
+
+        </div>
+
+        <button
+          onclick="generateReport()"
+          class="bg-purple-500 hover:bg-purple-400 transition px-6 py-3 rounded-xl font-semibold"
+        >
+          Generate Report
+        </button>
+
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-6 mt-12">
+
+        <div class="bg-slate-900 rounded-2xl p-6">
+          <p class="text-gray-400">Mock Interviews</p>
+          <h3 class="text-4xl font-bold mt-3">24</h3>
+        </div>
+
+        <div class="bg-slate-900 rounded-2xl p-6">
+          <p class="text-gray-400">Average Score</p>
+          <h3 class="text-4xl font-bold mt-3">88%</h3>
+        </div>
+
+        <div class="bg-slate-900 rounded-2xl p-6">
+          <p class="text-gray-400">Questions Solved</p>
+          <h3 class="text-4xl font-bold mt-3">320</h3>
+        </div>
+
+        <div class="bg-slate-900 rounded-2xl p-6">
+          <p class="text-gray-400">Confidence Level</p>
+          <h3 class="text-4xl font-bold mt-3">High</h3>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- PRACTICE -->
+
+  <section id="practice" class="px-6 md:px-16 py-20">
+
+    <div class="text-center mb-12">
+
+      <h2 class="text-4xl font-bold">
+        Practice Interview
+      </h2>
+
+      <p class="text-gray-400 mt-4">
+        Try answering a sample interview question.
+      </p>
+
+    </div>
+
+    <div class="glass rounded-3xl p-8 max-w-4xl mx-auto">
+
+      <div>
+
+        <label class="text-lg font-semibold">
+          Question
+        </label>
+
+        <div class="bg-slate-900 p-5 rounded-2xl mt-4">
+
+          <p id="questionText" class="text-lg">
+            What are your strengths as a software developer?
+          </p>
+
+        </div>
+
+      </div>
+
+      <div class="mt-8">
+
+        <label class="text-lg font-semibold">
+          Your Answer
+        </label>
+
+        <textarea
+          id="answerInput"
+          class="w-full mt-4 bg-slate-900 border border-slate-700 rounded-2xl p-5 focus:outline-none focus:border-cyan-400 min-h-[180px] resize-none"
+          placeholder="Type your answer here..."
+        ></textarea>
+
+      </div>
+
+      <div class="flex flex-wrap gap-4 mt-8">
+
+        <button
+          onclick="analyzeAnswer()"
+          class="bg-cyan-500 hover:bg-cyan-400 transition px-6 py-3 rounded-xl font-semibold"
+        >
+          Analyze Answer
+        </button>
+
+        <button
+          onclick="nextQuestion()"
+          class="glass px-6 py-3 rounded-xl hover:bg-white/10 transition"
+        >
+          Next Question
+        </button>
+
+      </div>
+
+      <div
+        id="feedbackBox"
+        class="hidden-box mt-10 bg-slate-900 rounded-2xl p-6 border border-slate-700"
+      >
+
+        <h3 class="text-2xl font-semibold mb-4">
+          AI Feedback
+        </h3>
+
+        <div class="space-y-4">
+
+          <p id="feedbackText" class="text-gray-300"></p>
+
+          <div>
+
+            <div class="flex justify-between mb-2">
+
+              <span>Confidence</span>
+
+              <span id="scoreText">
+                0%
+              </span>
+
+            </div>
+
+            <div class="w-full bg-slate-700 h-4 rounded-full overflow-hidden">
+
+              <div
+                id="scoreBar"
+                class="bg-gradient-to-r from-green-400 to-cyan-500 h-4 rounded-full"
+                style="width:0%"
+              ></div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- FOOTER -->
+
+  <footer class="px-6 md:px-16 py-10 border-t border-white/10 text-center text-gray-400">
+
+    <p>
+      © 2026 InterviewAI. Built for students and job seekers.
+    </p>
+
+  </footer>
+
+  <!-- JAVASCRIPT -->
+
+  <script>
+
+    let recognition;
+    let isRecording = false;
+    let finalTranscript = '';
+
+    const questions = [
+
+      'What are your strengths as a software developer?',
+
+      'Explain the difference between SQL and NoSQL databases.',
+
+      'Tell me about a challenging project you worked on.',
+
+      'Why should we hire you for this role?',
+
+      'What is REST API and why is it used?',
+
+      'Explain Object-Oriented Programming.',
+
+      'What are React Hooks?',
+
+      'What is cloud computing?',
+
+      'Difference between HTTP and HTTPS?',
+
+      'Explain authentication in web applications.',
+
+      'Describe teamwork experience.',
+
+      'How do you handle pressure and deadlines?',
+
+      'Explain frontend vs backend development.',
+
+      'Tell me about a difficult bug you fixed.',
+
+      'What are your future career goals?'
+    ];
+
+    let currentQuestion = 0;
+
+    function scrollToSection(id){
+
+      document.getElementById(id).scrollIntoView({
+        behavior:'smooth'
+      });
+
+    }
+
+    function nextQuestion(){
+
+      currentQuestion =
+      (currentQuestion + 1) % questions.length;
+
+      document.getElementById('questionText').innerText =
+      questions[currentQuestion];
+
+      document.getElementById('answerInput').value = '';
+
+      document.getElementById('feedbackBox')
+      .classList.add('hidden-box');
+    }
+
+    function analyzeAnswer(){
+
+      const answer =
+      document.getElementById('answerInput')
+      .value.trim();
+
+      if(answer.length < 20){
+
+        alert(
+          'Answer too short. Please write a meaningful response.'
+        );
+
+        return;
+      }
+
+      let score =
+      Math.min(95, Math.floor(answer.length / 4));
+
+      let feedback = '';
+
+      if(score > 80){
+
+        feedback =
+        'Excellent answer. Strong communication and technical explanation.';
+      }
+
+      else if(score > 60){
+
+        feedback =
+        'Good answer. Add more technical details and examples.';
+      }
+
+      else{
+
+        feedback =
+        'Your answer needs better clarity and structure.';
+      }
+
+      document.getElementById('feedbackBox')
+      .classList.remove('hidden-box');
+
+      document.getElementById('feedbackText')
+      .innerText = feedback;
+
+      document.getElementById('scoreText')
+      .innerText = score + '%';
+
+      document.getElementById('scoreBar')
+      .style.width = score + '%';
+
+      document.getElementById('confidenceValue')
+      .innerText = score + '%';
+
+      document.getElementById('confidenceBar')
+      .style.width = score + '%';
+    }
+
+    function generateReport(){
+
+      alert(
+        'Detailed AI Performance Report Generated Successfully!'
+      );
+    }
+
+    async function startSpeechAnalysis(){
+
+      if(isRecording) return;
+
+      try{
+
+        await navigator.mediaDevices.getUserMedia({
+          audio:true
+        });
+
+      }
+
+      catch(err){
+
+        alert(
+          'Please allow microphone permission.'
+        );
+
+        return;
+      }
+
+      const SpeechRecognition =
+      window.SpeechRecognition ||
+      window.webkitSpeechRecognition;
+
+      if(!SpeechRecognition){
+
+        alert(
+          'Speech Recognition not supported. Use Google Chrome.'
+        );
+
+        return;
+      }
+
+      const transcriptText =
+      document.getElementById('transcriptText');
+
+      const speechReport =
+      document.getElementById('speechReport');
+
+      const recordBtn =
+      document.getElementById('recordBtn');
+
+      finalTranscript = '';
+
+      transcriptText.innerText =
+      'Listening... Speak now';
+
+      speechReport.classList.add('hidden-box');
+
+      recognition = new SpeechRecognition();
+
+      recognition.lang = 'en-US';
+
+      recognition.continuous = true;
+
+      recognition.interimResults = true;
+
+      recognition.onresult = (event) => {
+
+        let interimTranscript = '';
+
+        for(
+          let i = event.resultIndex;
+          i < event.results.length;
+          i++
+        ){
+
+          const transcript =
+          event.results[i][0].transcript;
+
+          if(event.results[i].isFinal){
+
+            finalTranscript += transcript + ' ';
+          }
+
+          else{
+
+            interimTranscript += transcript;
+          }
+        }
+
+        transcriptText.innerText =
+        finalTranscript + interimTranscript;
+      };
+
+      recognition.onerror = (event) => {
+
+        alert(
+          'Speech recognition error: ' + event.error
+        );
+
+        isRecording = false;
+
+        recordBtn.disabled = false;
+
+        recordBtn.innerText =
+        '🎙 Start Recording';
+      };
+
+      recognition.onend = () => {
+
+        isRecording = false;
+
+        recordBtn.disabled = false;
+
+        recordBtn.innerText =
+        '🎙 Start Recording';
+      };
+
+      recognition.start();
+
+      isRecording = true;
+
+      recordBtn.disabled = true;
+
+      recordBtn.innerText =
+      '🎙 Recording...';
+    }
+
+    function stopSpeechAnalysis(){
+
+      if(!isRecording){
+
+        alert(
+          'Recording not started.'
+        );
+
+        return;
+      }
+
+      recognition.stop();
+
+      const speechReport =
+      document.getElementById('speechReport');
+
+      const transcript =
+      document.getElementById('transcriptText')
+      .innerText;
+
+      if(
+        transcript.trim() === '' ||
+        transcript.includes('Listening')
+      ){
+
+        alert(
+          'No speech detected.'
+        );
+
+        return;
+      }
+
+      speechReport.classList.remove('hidden-box');
+
+      speechReport.innerHTML = `
+
+        <div class="flex justify-between items-start gap-4">
+
+          <div>
+
+            <h4 class="text-2xl font-semibold mb-3">
+              AI Speech Feedback
+            </h4>
+
+            <div class="space-y-2 text-gray-300 leading-relaxed">
+
+              <p>✅ Clarity: Excellent</p>
+
+              <p>✅ Speaking Pace: Good</p>
+
+              <p>⚠️ Filler Words: Moderate</p>
+
+              <p>✅ Confidence Level: Strong</p>
+
+            </div>
+
+          </div>
+
+          <div class="text-5xl">
+            ✨
+          </div>
+
+        </div>
+
+      `;
+    }
+
+    function startMockInterview(){
+
+      scrollToSection('practice');
+
+      alert(
+        'AI Mock Interview Started Successfully!'
+      );
+    }
+
+    console.log(
+      'InterviewAI Loaded Successfully'
+    );
+
+  </script>
+
+</body>
+</html>
